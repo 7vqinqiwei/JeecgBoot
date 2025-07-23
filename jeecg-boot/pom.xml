@@ -8,7 +8,7 @@
 
 	<developers>
 		<developer>
-			<name>北京国炬信息技术有限公司</name>
+			<name>深圳颗粒数字科技有限公司</name>
 			<email>jeecgos@163.com</email>
 			<url>http://www.guojusoft.com</url>
 		</developer>
@@ -19,7 +19,7 @@
 		<developerConnection>http://guojusoft.com</developerConnection>
 		<url>http://www.jeecg.com/vip</url>
 	</scm>
-	
+
   	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
@@ -54,7 +54,7 @@
 		<!-- 国产数据库驱动 -->
 		<kingbase8.version>9.0.0</kingbase8.version>
 		<dm8.version>8.1.1.49</dm8.version>
-		
+
 		<!-- 积木报表-->
 		<jimureport-spring-boot-starter.version>2.1.0</jimureport-spring-boot-starter.version>
 		<minidao.version>1.10.10</minidao.version>
@@ -539,7 +539,7 @@
 			<url>http://maven.jeecg.com:8090/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-	
+
     <!-- 环境 -->
     <profiles>
         <!-- 开发 -->

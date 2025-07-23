@@ -8223,7 +8223,7 @@ CREATE TABLE `sys_tenant`  (
 -- ----------------------------
 -- Records of sys_tenant
 -- ----------------------------
-INSERT INTO `sys_tenant` VALUES (1000, '北京国炬信息技术有限公司', '2023-03-09 19:55:11', 'jeecg', NULL, NULL, 1, NULL, NULL, NULL, '', '2PI3U6', NULL, NULL, NULL, NULL, NULL, 0, 'admin', '2023-11-05 10:35:15', NULL);
+INSERT INTO `sys_tenant` VALUES (1000, '深圳颗粒数字科技有限公司', '2023-03-09 19:55:11', 'jeecg', NULL, NULL, 1, NULL, NULL, NULL, '', '2PI3U6', NULL, NULL, NULL, NULL, NULL, 0, 'admin', '2023-11-05 10:35:15', NULL);
 INSERT INTO `sys_tenant` VALUES (1001, '北京敲敲云科技有限公司', '2023-10-18 13:37:19', 'ceshi', NULL, NULL, 1, NULL, NULL, NULL, '', 'EX33W8', NULL, NULL, NULL, NULL, NULL, 0, 'admin', '2024-03-18 11:19:28', NULL);
 INSERT INTO `sys_tenant` VALUES (1002, '111', '2025-02-07 16:22:57', 'admin', NULL, NULL, 1, NULL, NULL, NULL, NULL, '8UDKXJ', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
 
@@ -8836,11 +8836,11 @@ delimiter ;;
 CREATE PROCEDURE `insert_200_records`()
 BEGIN
     DECLARE i INT DEFAULT 1;
-    
+
     WHILE i <= 200 DO
-        INSERT INTO jimu_report (id, code, name, del_flag) 
+        INSERT INTO jimu_report (id, code, name, del_flag)
         VALUES (i, CONCAT('RPT', LPAD(i, 3, '0')), CONCAT('Report ', i), 0);
-        
+
         SET i = i + 1;
     END WHILE;
 END
