@@ -128,7 +128,7 @@ public class AppPublicController {
     }
 
     @Operation(summary="新闻资讯-通过id查询")
-    @GetMapping(value = "appnews/queryById")
+    @GetMapping(value = "/appnews/queryById")
     public Result<AppNews> appNewsQueryById(@RequestParam(name="id",required=true) String id) {
         AppNews appNews = appNewsService.getById(id);
         if(appNews==null) {

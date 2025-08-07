@@ -36,7 +36,7 @@ public class FlywayConfig {
      */
     @Value("${spring.flyway.enabled:false}")
     private Boolean enabled;
-    
+
     /**
      * 编码格式，默认UTF-8
      */
@@ -102,7 +102,7 @@ public class FlywayConfig {
         if(!enabled){
             return;
         }
-        
+
         DynamicRoutingDataSource ds = (DynamicRoutingDataSource) dataSource;
         Map<String, DataSource> dataSources = ds.getDataSources();
         dataSources.forEach((k, v) -> {
@@ -123,7 +123,7 @@ public class FlywayConfig {
                                     .baselineOnMigrate(baselineOnMigrate)
                                     .cleanDisabled(cleanDisabled)
                                     .load();
-                            flyway.migrate();
+//                            flyway.migrate();
                             log.info("【数据库升级】平台集成了MySQL库的Flyway，数据库版本自动升级! ");
                     } catch (FlywayException e) {
                         log.error("【数据库升级】flyway执行sql脚本失败", e);

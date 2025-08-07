@@ -56,7 +56,7 @@ public class ShiroConfig {
     private JeecgBaseConfig jeecgBaseConfig;
     @Autowired(required = false)
     private RedisProperties redisProperties;
-    
+
     /**
      * Filter Chain定义说明
      *
@@ -109,6 +109,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/sys/getLoginQrcode/**", "anon"); //登录二维码
         filterChainDefinitionMap.put("/sys/getQrcodeToken/**", "anon"); //监听扫码
         filterChainDefinitionMap.put("/sys/checkAuth", "anon"); //授权接口排除
+        filterChainDefinitionMap.put("/public/**", "anon"); //开放接口排除
 
 
         //update-begin--Author:scott Date:20221116 for：排除静态资源后缀
@@ -144,7 +145,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/jmreport/**", "anon");
         filterChainDefinitionMap.put("/**/*.js.map", "anon");
         filterChainDefinitionMap.put("/**/*.css.map", "anon");
-        
+
         //积木BI大屏和仪表盘排除
         filterChainDefinitionMap.put("/drag/view", "anon");
         filterChainDefinitionMap.put("/drag/page/queryById", "anon");
@@ -299,7 +300,7 @@ public class ShiroConfig {
     /**
      * RedisConfig在项目starter项目中
      * jeecg-boot-starter-github\jeecg-boot-common\src\main\java\org\jeecg\common\modules\redis\config\RedisConfig.java
-     * 
+     *
      * 配置shiro redisManager
      * 使用的是shiro-redis开源插件
      *
@@ -321,7 +322,7 @@ public class ShiroConfig {
 
             return sentinelManager;
         }
-        
+
         // redis 单机支持，在集群为空，或者集群无机器时候使用 add by jzyadmin@163.com
         if (lettuceConnectionFactory.getClusterConfiguration() == null || lettuceConnectionFactory.getClusterConfiguration().getClusterNodes().isEmpty()) {
             RedisManager redisManager = new RedisManager();
