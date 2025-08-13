@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 /**
  * @Description: banner实体
  * @Author: jeecg-boot
- * @Date:   2025-08-07
+ * @Date:   2025-08-12
  * @Version: V1.0
  */
 @Data
@@ -68,4 +68,12 @@ public class AppBanner implements Serializable {
 	/**所属部门*/
     @Schema(description = "所属部门")
     private String sysOrgCode;
+	/**图片*/
+	@Excel(name = "图片", width = 15)
+    @Schema(description = "图片")
+    private String img;
+	/**跳转的路径*/
+	@Excel(name = "跳转的路径", width = 15)
+    @Schema(description = "跳转的路径")
+    private String url;
 }

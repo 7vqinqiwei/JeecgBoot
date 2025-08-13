@@ -16,7 +16,17 @@
 						</a-col>
 						<a-col :span="24">
 							<a-form-item label="Banner描述" v-bind="validateInfos.posDesc" id="AppBannerForm-posDesc" name="posDesc">
-								<a-input v-model:value="formData.posDesc" placeholder="请输入Banner描述"  allow-clear ></a-input>
+								<a-textarea v-model:value="formData.posDesc" :rows="4" placeholder="请输入Banner描述" />
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="图片" v-bind="validateInfos.img" id="AppBannerForm-img" name="img">
+								<j-image-upload :fileMax="0" v-model:value="formData.img" ></j-image-upload>
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="跳转的路径" v-bind="validateInfos.url" id="AppBannerForm-url" name="url">
+								<a-input v-model:value="formData.url" placeholder="请输入跳转的路径"  allow-clear ></a-input>
 							</a-form-item>
 						</a-col>
           </a-row>
@@ -30,6 +40,7 @@
   import { ref, reactive, defineExpose, nextTick, defineProps, computed, onMounted } from 'vue';
   import { defHttp } from '/@/utils/http/axios';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import JImageUpload from '/@/components/Form/src/jeecg/components/JImageUpload.vue';
   import { getDateByPicker, getValueType } from '/@/utils';
   import { saveOrUpdate } from '../AppBanner.api';
   import { Form } from 'ant-design-vue';
@@ -47,6 +58,8 @@
     name: '',   
     sort: undefined,
     posDesc: '',   
+    img: '',   
+    url: '',   
   });
   const { createMessage } = useMessage();
   const labelCol = ref<any>({ xs: { span: 24 }, sm: { span: 5 } });
@@ -54,6 +67,8 @@
   const confirmLoading = ref<boolean>(false);
   //表单验证
   const validatorRules = reactive({
+    name: [{ required: true, message: '请输入名称!'},],
+    img: [{ required: true, message: '请输入图片!'},],
   });
   const { resetFields, validate, validateInfos } = useForm(formData, validatorRules, { immediate: false });
   //日期个性化选择

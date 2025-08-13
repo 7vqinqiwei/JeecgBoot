@@ -1,70 +1,179 @@
 <template>
-    <div style="min-height: 400px">
-        <BasicForm @register="registerForm"></BasicForm>
-        <div style="width: 100%;text-align: center" v-if="!formDisabled">
-            <a-button @click="submitForm" pre-icon="ant-design:check" type="primary">提 交</a-button>
-        </div>
-    </div>
+  <a-spin :spinning="confirmLoading">
+    <JFormContainer :disabled="disabled">
+      <template #detail>
+        <a-form ref="formRef" class="antd-modal-form" :labelCol="labelCol" :wrapperCol="wrapperCol" name="AppNewsForm">
+          <a-row>
+						<a-col :span="24">
+							<a-form-item label="标题" v-bind="validateInfos.title" id="AppNewsForm-title" name="title">
+								<a-input v-model:value="formData.title" placeholder="请输入标题"  allow-clear ></a-input>
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="简介" v-bind="validateInfos.introduce" id="AppNewsForm-introduce" name="introduce">
+								<a-textarea v-model:value="formData.introduce" :rows="4" placeholder="请输入简介" />
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="发布时间" v-bind="validateInfos.publishTime" id="AppNewsForm-publishTime" name="publishTime">
+								<a-date-picker placeholder="请选择发布时间"  v-model:value="formData.publishTime" showTime value-format="YYYY-MM-DD HH:mm:ss" style="width: 100%"  allow-clear />
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="发布人" v-bind="validateInfos.publishBy" id="AppNewsForm-publishBy" name="publishBy">
+						<j-select-user v-model:value="formData.publishBy"      allow-clear />
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="内容" v-bind="validateInfos.content" id="AppNewsForm-content" name="content">
+								<j-editor v-model:value="formData.content"  :autoFocus="false"/>
+							</a-form-item>
+						</a-col>
+          </a-row>
+        </a-form>
+      </template>
+    </JFormContainer>
+  </a-spin>
 </template>
 
-<script lang="ts">
-    import {BasicForm, useForm} from '/@/components/Form/index';
-    import {computed, defineComponent} from 'vue';
-    import {defHttp} from '/@/utils/http/axios';
-    import { propTypes } from '/@/utils/propTypes';
-    import {getBpmFormSchema} from '../AppNews.data';
-    import {saveOrUpdate} from '../AppNews.api';
-    
-    export default defineComponent({
-        name: "AppNewsForm",
-        components:{
-            BasicForm
-        },
-        props:{
-            formData: propTypes.object.def({}),
-            formBpm: propTypes.bool.def(true),
-        },
-        setup(props){
-            const [registerForm, { setFieldsValue, setProps, getFieldsValue }] = useForm({
-                labelWidth: 150,
-                schemas: getBpmFormSchema(props.formData),
-                showActionButtonGroup: false,
-                baseColProps: {span: 24}
-            });
+<script lang="ts" setup>
+  import { ref, reactive, defineExpose, nextTick, defineProps, computed, onMounted } from 'vue';
+  import { defHttp } from '/@/utils/http/axios';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import JSelectUser from '/@/components/Form/src/jeecg/components/JSelectUser.vue';
+  import JEditor from '/@/components/Form/src/jeecg/components/JEditor.vue';
+  import { getDateByPicker, getValueType } from '/@/utils';
+  import { saveOrUpdate } from '../AppNews.api';
+  import { Form } from 'ant-design-vue';
+  import JFormContainer from '/@/components/Form/src/container/JFormContainer.vue';
+  const props = defineProps({
+    formDisabled: { type: Boolean, default: false },
+    formData: { type: Object, default: () => ({})},
+    formBpm: { type: Boolean, default: true }
+  });
+  const formRef = ref();
+  const useForm = Form.useForm;
+  const emit = defineEmits(['register', 'ok']);
+  const formData = reactive<Record<string, any>>({
+    id: '',
+    title: '',   
+    introduce: '',   
+    publishTime: '',   
+    publishBy: '',   
+    content: '',   
+  });
+  const { createMessage } = useMessage();
+  const labelCol = ref<any>({ xs: { span: 24 }, sm: { span: 5 } });
+  const wrapperCol = ref<any>({ xs: { span: 24 }, sm: { span: 16 } });
+  const confirmLoading = ref<boolean>(false);
+  //表单验证
+  const validatorRules = reactive({
+    title: [{ required: true, message: '请输入标题!'},],
+    introduce: [{ required: true, message: '请输入简介!'},],
+    content: [{ required: true, message: '请输入内容!'},],
+  });
+  const { resetFields, validate, validateInfos } = useForm(formData, validatorRules, { immediate: false });
+  //日期个性化选择
+  const fieldPickers = reactive({
+  });
 
-            const formDisabled = computed(()=>{
-                if(props.formData.disabled === false){
-                    return false;
-                }
-                return true;
-            });
+  // 表单禁用
+  const disabled = computed(()=>{
+    if(props.formBpm === true){
+      if(props.formData.disabled === false){
+        return false;
+      }else{
+        return true;
+      }
+    }
+    return props.formDisabled;
+  });
 
-            let formData = {};
-            const queryByIdUrl = '/appnews/appNews/queryById';
-            async function initFormData(){
-                let params = {id: props.formData.dataId};
-                const data = await defHttp.get({url: queryByIdUrl, params});
-                formData = {...data}
-                //设置表单的值
-                await setFieldsValue(formData);
-                //默认是禁用
-                await setProps({disabled: formDisabled.value})
-            }
+  
+  /**
+   * 新增
+   */
+  function add() {
+    edit({});
+  }
 
-            async function submitForm() {
-                let data = getFieldsValue();
-                let params = Object.assign({}, formData, data);
-                console.log('表单数据', params)
-                await saveOrUpdate(params, true)
-            }
-
-            initFormData();
-            
-            return {
-                registerForm,
-                formDisabled,
-                submitForm,
-            }
+  /**
+   * 编辑
+   */
+  function edit(record) {
+    nextTick(() => {
+      resetFields();
+      const tmpData = {};
+      Object.keys(formData).forEach((key) => {
+        if(record.hasOwnProperty(key)){
+          tmpData[key] = record[key]
         }
+      })
+      //赋值
+      Object.assign(formData, tmpData);
     });
+  }
+
+  /**
+   * 提交数据
+   */
+  async function submitForm() {
+    try {
+      // 触发表单验证
+      await validate();
+    } catch ({ errorFields }) {
+      if (errorFields) {
+        const firstField = errorFields[0];
+        if (firstField) {
+          formRef.value.scrollToField(firstField.name, { behavior: 'smooth', block: 'center' });
+        }
+      }
+      return Promise.reject(errorFields);
+    }
+    confirmLoading.value = true;
+    const isUpdate = ref<boolean>(false);
+    //时间格式化
+    let model = formData;
+    if (model.id) {
+      isUpdate.value = true;
+    }
+    //循环数据
+    for (let data in model) {
+      // 更新个性化日期选择器的值
+      model[data] = getDateByPicker(model[data], fieldPickers[data]);
+      //如果该数据是数组并且是字符串类型
+      if (model[data] instanceof Array) {
+        let valueType = getValueType(formRef.value.getProps, data);
+        //如果是字符串类型的需要变成以逗号分割的字符串
+        if (valueType === 'string') {
+          model[data] = model[data].join(',');
+        }
+      }
+    }
+    await saveOrUpdate(model, isUpdate.value)
+      .then((res) => {
+        if (res.success) {
+          createMessage.success(res.message);
+          emit('ok');
+        } else {
+          createMessage.warning(res.message);
+        }
+      })
+      .finally(() => {
+        confirmLoading.value = false;
+      });
+  }
+
+
+  defineExpose({
+    add,
+    edit,
+    submitForm,
+  });
 </script>
+
+<style lang="less" scoped>
+  .antd-modal-form {
+    padding: 14px;
+  }
+</style>

@@ -41,7 +41,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  /**
  * @Description: 应用案例
  * @Author: jeecg-boot
- * @Date:   2025-08-07
+ * @Date:   2025-08-12
  * @Version: V1.0
  */
 @Tag(name="应用案例")

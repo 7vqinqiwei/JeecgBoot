@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 /**
  * @Description: banner实体
  * @Author: jeecg-boot
- * @Date:   2025-08-07
+ * @Date:   2025-08-12
  * @Version: V1.0
  */
 @Service
