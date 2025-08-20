@@ -89,12 +89,12 @@ public class Swagger3Config implements WebMvcConfigurer {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("JeecgBoot 后台服务API接口文档")
+                        .title("亿流官网 后台服务API接口文档")
                         .version("3.8.1")
-                        .contact(new Contact().name("深圳颗粒数字科技有限公司").url("www.jeccg.com").email("jeecgos@163.com"))
+                        .contact(new Contact().name("深圳颗粒数字科技有限公司").url("www.partiai.com").email("wayne@163.com"))
                         .description( "后台API接口")
                         .termsOfService("NO terms of service")
-                        .license(new License().name("Apache 2.0").url("http://www.apache.org/licenses/LICENSE-2.0.html")))
+                        .license(new License().name("").url("")))
                 .addSecurityItem(new SecurityRequirement().addList(CommonConstant.X_ACCESS_TOKEN))
                 .components(new Components().addSecuritySchemes(CommonConstant.X_ACCESS_TOKEN,
                         new SecurityScheme().name(CommonConstant.X_ACCESS_TOKEN).type(SecurityScheme.Type.HTTP)));
