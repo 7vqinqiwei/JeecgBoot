@@ -5,8 +5,18 @@
         <a-form ref="formRef" class="antd-modal-form" :labelCol="labelCol" :wrapperCol="wrapperCol" name="AppCaseForm">
           <a-row>
 						<a-col :span="24">
+							<a-form-item label="案例类型" v-bind="validateInfos.caseType" id="AppCaseForm-caseType" name="caseType">
+								<j-dict-select-tag v-model:value="formData.caseType" dictCode="caseType" placeholder="请选择案例类型"  allow-clear />
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
 							<a-form-item label="标题" v-bind="validateInfos.title" id="AppCaseForm-title" name="title">
 								<a-input v-model:value="formData.title" placeholder="请输入标题"  allow-clear ></a-input>
+							</a-form-item>
+						</a-col>
+						<a-col :span="24">
+							<a-form-item label="简介" v-bind="validateInfos.introduce" id="AppCaseForm-introduce" name="introduce">
+								<a-input v-model:value="formData.introduce" placeholder="请输入简介"  allow-clear ></a-input>
 							</a-form-item>
 						</a-col>
 						<a-col :span="24">
@@ -30,6 +40,7 @@
   import { ref, reactive, defineExpose, nextTick, defineProps, computed, onMounted } from 'vue';
   import { defHttp } from '/@/utils/http/axios';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import JDictSelectTag from '/@/components/Form/src/jeecg/components/JDictSelectTag.vue';
   import JImageUpload from '/@/components/Form/src/jeecg/components/JImageUpload.vue';
   import JEditor from '/@/components/Form/src/jeecg/components/JEditor.vue';
   import { getDateByPicker, getValueType } from '/@/utils';
@@ -46,7 +57,9 @@
   const emit = defineEmits(['register', 'ok']);
   const formData = reactive<Record<string, any>>({
     id: '',
+    caseType: '1',   
     title: '',   
+    introduce: '',   
     pic: '',   
     content: '',   
   });
@@ -56,7 +69,9 @@
   const confirmLoading = ref<boolean>(false);
   //表单验证
   const validatorRules = reactive({
+    caseType: [{ required: true, message: '请输入案例类型!'},],
     title: [{ required: true, message: '请输入标题!'},],
+    introduce: [{ required: true, message: '请输入简介!'},],
     pic: [{ required: true, message: '请输入图片[数组]!'},],
     content: [{ required: true, message: '请输入案例内容!'},],
   });

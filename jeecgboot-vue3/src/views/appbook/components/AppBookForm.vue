@@ -2,36 +2,11 @@
   <a-spin :spinning="confirmLoading">
     <JFormContainer :disabled="disabled">
       <template #detail>
-        <a-form ref="formRef" class="antd-modal-form" :labelCol="labelCol" :wrapperCol="wrapperCol" name="AppNewsForm">
+        <a-form ref="formRef" class="antd-modal-form" :labelCol="labelCol" :wrapperCol="wrapperCol" name="AppBookForm">
           <a-row>
 						<a-col :span="24">
-							<a-form-item label="标题" v-bind="validateInfos.title" id="AppNewsForm-title" name="title">
-								<a-input v-model:value="formData.title" placeholder="请输入标题"  allow-clear ></a-input>
-							</a-form-item>
-						</a-col>
-						<a-col :span="24">
-							<a-form-item label="简介" v-bind="validateInfos.introduce" id="AppNewsForm-introduce" name="introduce">
-								<a-textarea v-model:value="formData.introduce" :rows="4" placeholder="请输入简介" />
-							</a-form-item>
-						</a-col>
-						<a-col :span="24">
-							<a-form-item label="图片" v-bind="validateInfos.pic" id="AppNewsForm-pic" name="pic">
-								<j-image-upload :fileMax="0" v-model:value="formData.pic" ></j-image-upload>
-							</a-form-item>
-						</a-col>
-						<a-col :span="24">
-							<a-form-item label="发布时间" v-bind="validateInfos.publishTime" id="AppNewsForm-publishTime" name="publishTime">
-								<a-date-picker placeholder="请选择发布时间"  v-model:value="formData.publishTime" showTime value-format="YYYY-MM-DD HH:mm:ss" style="width: 100%"  allow-clear />
-							</a-form-item>
-						</a-col>
-						<a-col :span="24">
-							<a-form-item label="发布人" v-bind="validateInfos.publishBy" id="AppNewsForm-publishBy" name="publishBy">
-						<j-select-user v-model:value="formData.publishBy"      allow-clear />
-							</a-form-item>
-						</a-col>
-						<a-col :span="24">
-							<a-form-item label="内容" v-bind="validateInfos.content" id="AppNewsForm-content" name="content">
-								<j-editor v-model:value="formData.content"  :autoFocus="false"/>
+							<a-form-item label="手机号" v-bind="validateInfos.phone" id="AppBookForm-phone" name="phone">
+								<a-input v-model:value="formData.phone" placeholder="请输入手机号"  allow-clear ></a-input>
 							</a-form-item>
 						</a-col>
           </a-row>
@@ -45,11 +20,8 @@
   import { ref, reactive, defineExpose, nextTick, defineProps, computed, onMounted } from 'vue';
   import { defHttp } from '/@/utils/http/axios';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import JSelectUser from '/@/components/Form/src/jeecg/components/JSelectUser.vue';
-  import JImageUpload from '/@/components/Form/src/jeecg/components/JImageUpload.vue';
-  import JEditor from '/@/components/Form/src/jeecg/components/JEditor.vue';
   import { getDateByPicker, getValueType } from '/@/utils';
-  import { saveOrUpdate } from '../AppNews.api';
+  import { saveOrUpdate } from '../AppBook.api';
   import { Form } from 'ant-design-vue';
   import JFormContainer from '/@/components/Form/src/container/JFormContainer.vue';
   const props = defineProps({
@@ -62,12 +34,7 @@
   const emit = defineEmits(['register', 'ok']);
   const formData = reactive<Record<string, any>>({
     id: '',
-    title: '',
-    introduce: '',
-    pic: '',
-    publishTime: '',
-    publishBy: '',
-    content: '',
+    phone: '',   
   });
   const { createMessage } = useMessage();
   const labelCol = ref<any>({ xs: { span: 24 }, sm: { span: 5 } });
@@ -75,10 +42,7 @@
   const confirmLoading = ref<boolean>(false);
   //表单验证
   const validatorRules = reactive({
-    title: [{ required: true, message: '请输入标题!'},],
-    introduce: [{ required: true, message: '请输入简介!'},],
-    pic: [{ required: true, message: '请输入图片数组[,]!'},],
-    content: [{ required: true, message: '请输入内容!'},],
+    phone: [{ required: true, message: '请输入手机号!'}, { pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号码!'},],
   });
   const { resetFields, validate, validateInfos } = useForm(formData, validatorRules, { immediate: false });
   //日期个性化选择
@@ -97,7 +61,7 @@
     return props.formDisabled;
   });
 
-
+  
   /**
    * 新增
    */

@@ -4,24 +4,6 @@
     <div class="jeecg-basic-table-form-container">
       <a-form ref="formRef" @keyup.enter.native="searchQuery" :model="queryParam" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-row :gutter="24">
-          <a-col :lg="6">
-            <a-form-item name="caseType">
-              <template #label><span title="案例类型">案例类型</span></template>
-              <j-select-multiple placeholder="请选择案例类型" v-model:value="queryParam.caseType" dictCode="caseType" allow-clear />
-            </a-form-item>
-          </a-col>
-          <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
-              <a-col :lg="6">
-                <a-button type="primary" preIcon="ant-design:search-outlined" @click="searchQuery">查询</a-button>
-                <a-button type="primary" preIcon="ant-design:reload-outlined" @click="searchReset" style="margin-left: 8px">重置</a-button>
-                <a @click="toggleSearchStatus = !toggleSearchStatus" style="margin-left: 8px">
-                  {{ toggleSearchStatus ? '收起' : '展开' }}
-                  <Icon :icon="toggleSearchStatus ? 'ant-design:up-outlined' : 'ant-design:down-outlined'" />
-                </a>
-              </a-col>
-            </span>
-          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -29,9 +11,9 @@
     <BasicTable @register="registerTable" :rowSelection="rowSelection">
       <!--插槽:table标题-->
       <template #tableTitle>
-        <a-button type="primary" v-auth="'appcase:app_case:add'"  @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>
-        <a-button  type="primary" v-auth="'appcase:app_case:exportXls'" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
-        <j-upload-button  type="primary" v-auth="'appcase:app_case:importExcel'"  preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
+        <a-button type="primary" v-auth="'appbook:app_book:add'"  @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>
+        <a-button  type="primary" v-auth="'appbook:app_book:exportXls'" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>
+        <j-upload-button  type="primary" v-auth="'appbook:app_book:importExcel'"  preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>
         <a-dropdown v-if="selectedRowKeys.length > 0">
           <template #overlay>
             <a-menu>
@@ -41,7 +23,7 @@
               </a-menu-item>
             </a-menu>
           </template>
-          <a-button v-auth="'appcase:app_case:deleteBatch'">批量操作
+          <a-button v-auth="'appbook:app_book:deleteBatch'">批量操作
             <Icon icon="mdi:chevron-down"></Icon>
           </a-button>
         </a-dropdown>
@@ -53,30 +35,24 @@
         <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>
       </template>
       <template v-slot:bodyCell="{ column, record, index, text }">
-        <template v-if="column.dataIndex==='content'">
-          <!--富文本件字段回显插槽-->
-          <div v-html="text"></div>
-        </template>
       </template>
     </BasicTable>
     <!-- 表单区域 -->
-    <AppCaseModal ref="registerModal" @success="handleSuccess"></AppCaseModal>
+    <AppBookModal ref="registerModal" @success="handleSuccess"></AppBookModal>
   </div>
 </template>
 
-<script lang="ts" name="appcase-appCase" setup>
+<script lang="ts" name="appbook-appBook" setup>
   import { ref, reactive } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { useListPage } from '/@/hooks/system/useListPage';
-  import { columns, superQuerySchema } from './AppCase.data';
-  import { list, deleteOne, batchDelete, getImportUrl, getExportUrl } from './AppCase.api';
+  import { columns, superQuerySchema } from './AppBook.data';
+  import { list, deleteOne, batchDelete, getImportUrl, getExportUrl } from './AppBook.api';
   import { downloadFile } from '/@/utils/common/renderUtils';
-  import AppCaseModal from './components/AppCaseModal.vue'
+  import AppBookModal from './components/AppBookModal.vue'
   import { useUserStore } from '/@/store/modules/user';
   import { useMessage } from '/@/hooks/web/useMessage';
    import {useModal} from '/@/components/Modal';
-  import JDictSelectTag from '/@/components/Form/src/jeecg/components/JDictSelectTag.vue';
-  import JSelectMultiple from '/@/components/Form/src/jeecg/components/JSelectMultiple.vue';
   import { getDateByPicker } from '/@/utils';
 
   const fieldPickers = reactive({
@@ -91,7 +67,7 @@
   //注册table数据
   const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
     tableProps: {
-      title: '应用案例',
+      title: '预约表',
       api: list,
       columns,
       canResize:true,
@@ -110,7 +86,7 @@
       },
     },
     exportConfig: {
-      name: "应用案例",
+      name: "预约表",
       url: getExportUrl,
       params: queryParam,
     },
@@ -197,7 +173,7 @@
       {
         label: '编辑',
         onClick: handleEdit.bind(null, record),
-        auth: 'appcase:app_case:edit'
+        auth: 'appbook:app_book:edit'
       },
     ];
   }
@@ -217,7 +193,7 @@
           confirm: handleDelete.bind(null, record),
           placement: 'topLeft',
         },
-        auth: 'appcase:app_case:delete'
+        auth: 'appbook:app_book:delete'
       }
     ]
   }

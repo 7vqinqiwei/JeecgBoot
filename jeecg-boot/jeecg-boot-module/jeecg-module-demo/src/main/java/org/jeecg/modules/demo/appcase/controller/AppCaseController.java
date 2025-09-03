@@ -41,7 +41,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  /**
  * @Description: 应用案例
  * @Author: jeecg-boot
- * @Date:   2025-08-12
+ * @Date:   2025-09-02
  * @Version: V1.0
  */
 @Tag(name="应用案例")
@@ -70,7 +70,11 @@ public class AppCaseController extends JeecgController<AppCase, IAppCaseService>
 								   HttpServletRequest req) {
 
 
-        QueryWrapper<AppCase> queryWrapper = QueryGenerator.initQueryWrapper(appCase, req.getParameterMap());
+        // 自定义查询规则
+        Map<String, QueryRuleEnum> customeRuleMap = new HashMap<>();
+        // 自定义多选的查询规则为：LIKE_WITH_OR
+        customeRuleMap.put("caseType", QueryRuleEnum.LIKE_WITH_OR);
+        QueryWrapper<AppCase> queryWrapper = QueryGenerator.initQueryWrapper(appCase, req.getParameterMap(),customeRuleMap);
 		Page<AppCase> page = new Page<AppCase>(pageNo, pageSize);
 		IPage<AppCase> pageList = appCaseService.page(page, queryWrapper);
 		return Result.OK(pageList);

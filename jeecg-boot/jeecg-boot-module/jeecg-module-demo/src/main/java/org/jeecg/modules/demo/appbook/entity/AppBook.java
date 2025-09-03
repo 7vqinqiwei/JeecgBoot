@@ -1,4 +1,4 @@
-package org.jeecg.modules.demo.appcase.entity;
+package org.jeecg.modules.demo.appbook.entity;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -20,17 +20,17 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @Description: 应用案例
+ * @Description: 预约表
  * @Author: jeecg-boot
- * @Date:   2025-09-02
+ * @Date:   2025-09-01
  * @Version: V1.0
  */
 @Data
-@TableName("app_case")
+@TableName("app_book")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-@Schema(description="应用案例")
-public class AppCase implements Serializable {
+@Schema(description="预约表")
+public class AppBook implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	/**主键*/
@@ -56,25 +56,8 @@ public class AppCase implements Serializable {
 	/**所属部门*/
     @Schema(description = "所属部门")
     private String sysOrgCode;
-	/**案例类型*/
-	@Excel(name = "案例类型", width = 15, dicCode = "caseType")
-	@Dict(dicCode = "caseType")
-    @Schema(description = "案例类型")
-    private String caseType;
-	/**标题*/
-	@Excel(name = "标题", width = 15)
-    @Schema(description = "标题")
-    private String title;
-	/**简介*/
-	@Excel(name = "简介", width = 15)
-    @Schema(description = "简介")
-    private String introduce;
-	/**图片[数组]*/
-	@Excel(name = "图片[数组]", width = 15)
-    @Schema(description = "图片[数组]")
-    private String pic;
-	/**案例内容*/
-	@Excel(name = "案例内容", width = 15)
-    @Schema(description = "案例内容")
-    private String content;
+	/**手机号*/
+	@Excel(name = "手机号", width = 15)
+    @Schema(description = "手机号")
+    private String phone;
 }

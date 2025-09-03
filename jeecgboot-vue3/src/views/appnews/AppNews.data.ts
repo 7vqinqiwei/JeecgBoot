@@ -16,6 +16,12 @@ export const columns: BasicColumn[] = [
     dataIndex: 'introduce'
   },
   {
+    title: '图片数组[,]',
+    align: "center",
+    dataIndex: 'pic',
+    customRender: render.renderImage,
+  },
+  {
     title: '发布时间',
     align: "center",
     dataIndex: 'publishTime'
@@ -36,7 +42,8 @@ export const columns: BasicColumn[] = [
 export const superQuerySchema = {
   title: {title: '标题',order: 0,view: 'text', type: 'string',},
   introduce: {title: '简介',order: 1,view: 'textarea', type: 'string',},
-  publishTime: {title: '发布时间',order: 2,view: 'datetime', type: 'string',},
-  publishBy: {title: '发布人',order: 3,view: 'sel_user', type: 'string',},
-  content: {title: '内容',order: 4,view: 'umeditor', type: 'string',},
+  pic: {title: '图片数组[,]',order: 2,view: 'image', type: 'string',},
+  publishTime: {title: '发布时间',order: 3,view: 'datetime', type: 'string',},
+  publishBy: {title: '发布人',order: 4,view: 'sel_user', type: 'string',},
+  content: {title: '内容',order: 5,view: 'umeditor', type: 'string',},
 };

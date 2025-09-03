@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  * @Description: 应用案例
  * @Author: jeecg-boot
- * @Date:   2025-08-12
+ * @Date:   2025-09-02
  * @Version: V1.0
  */
 public interface AppCaseMapper extends BaseMapper<AppCase> {
