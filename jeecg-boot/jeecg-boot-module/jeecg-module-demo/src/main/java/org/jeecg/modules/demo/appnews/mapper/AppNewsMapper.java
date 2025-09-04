@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  * @Description: 新闻资讯
  * @Author: jeecg-boot
- * @Date:   2025-09-02
+ * @Date:   2025-09-03
  * @Version: V1.0
  */
 public interface AppNewsMapper extends BaseMapper<AppNews> {

@@ -77,7 +77,7 @@
   const validatorRules = reactive({
     title: [{ required: true, message: '请输入标题!'},],
     introduce: [{ required: true, message: '请输入简介!'},],
-    pic: [{ required: true, message: '请输入图片数组[,]!'},],
+    pic: [{ required: true, message: '请上传图片!'},],
     content: [{ required: true, message: '请输入内容!'},],
   });
   const { resetFields, validate, validateInfos } = useForm(formData, validatorRules, { immediate: false });

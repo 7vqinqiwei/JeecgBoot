@@ -41,7 +41,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
  /**
  * @Description: 新闻资讯
  * @Author: jeecg-boot
- * @Date:   2025-09-02
+ * @Date:   2025-09-03
  * @Version: V1.0
  */
 @Tag(name="新闻资讯")

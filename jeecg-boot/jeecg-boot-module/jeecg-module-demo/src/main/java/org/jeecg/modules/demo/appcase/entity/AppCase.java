@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 /**
  * @Description: 应用案例
  * @Author: jeecg-boot
- * @Date:   2025-09-02
+ * @Date:   2025-09-04
  * @Version: V1.0
  */
 @Data
@@ -56,25 +56,117 @@ public class AppCase implements Serializable {
 	/**所属部门*/
     @Schema(description = "所属部门")
     private String sysOrgCode;
+	/**标题*/
+	@Excel(name = "标题", width = 15)
+    @Schema(description = "标题")
+    private String title;
 	/**案例类型*/
 	@Excel(name = "案例类型", width = 15, dicCode = "caseType")
 	@Dict(dicCode = "caseType")
     @Schema(description = "案例类型")
     private String caseType;
-	/**标题*/
-	@Excel(name = "标题", width = 15)
-    @Schema(description = "标题")
-    private String title;
-	/**简介*/
-	@Excel(name = "简介", width = 15)
-    @Schema(description = "简介")
+	/**项目单位*/
+	@Excel(name = "项目单位", width = 15)
+    @Schema(description = "项目单位")
+    private String workUnit;
+	/**Logo*/
+	@Excel(name = "Logo", width = 15)
+    @Schema(description = "Logo")
+    private String logo;
+	/**介绍描述*/
+	@Excel(name = "介绍描述", width = 15)
+    @Schema(description = "介绍描述")
     private String introduce;
-	/**图片[数组]*/
-	@Excel(name = "图片[数组]", width = 15)
-    @Schema(description = "图片[数组]")
-    private String pic;
 	/**案例内容*/
 	@Excel(name = "案例内容", width = 15)
     @Schema(description = "案例内容")
     private String content;
+	/**痛点1*/
+	@Excel(name = "痛点1", width = 15)
+    @Schema(description = "痛点1")
+    private String painPoint1;
+	/**痛点2*/
+	@Excel(name = "痛点2", width = 15)
+    @Schema(description = "痛点2")
+    private String painPoint2;
+	/**痛点3*/
+	@Excel(name = "痛点3", width = 15)
+    @Schema(description = "痛点3")
+    private String painPoint3;
+	/**痛点4*/
+	@Excel(name = "痛点4", width = 15)
+    @Schema(description = "痛点4")
+    private String painPoint4;
+	/**项目图片*/
+	@Excel(name = "项目图片", width = 15)
+    @Schema(description = "项目图片")
+    private String pic;
+	/**方案一*/
+	@Excel(name = "方案一", width = 15)
+    @Schema(description = "方案一")
+    private String scheme1;
+	/**方案一描述*/
+	@Excel(name = "方案一描述", width = 15)
+    @Schema(description = "方案一描述")
+    private String scheme1desc;
+	/**方案二*/
+	@Excel(name = "方案二", width = 15)
+    @Schema(description = "方案二")
+    private String scheme2;
+	/**方案二描述*/
+	@Excel(name = "方案二描述", width = 15)
+    @Schema(description = "方案二描述")
+    private String scheme2desc;
+	/**方案三*/
+	@Excel(name = "方案三", width = 15)
+    @Schema(description = "方案三")
+    private String scheme3;
+	/**方案三描述*/
+	@Excel(name = "方案三描述", width = 15)
+    @Schema(description = "方案三描述")
+    private String scheme3desc;
+	/**方案四*/
+	@Excel(name = "方案四", width = 15)
+    @Schema(description = "方案四")
+    private String scheme4;
+	/**方案四描述*/
+	@Excel(name = "方案四描述", width = 15)
+    @Schema(description = "方案四描述")
+    private String scheme4desc;
+	/**方案配图上传*/
+	@Excel(name = "方案配图上传", width = 15)
+    @Schema(description = "方案配图上传")
+    private String schemePic;
+	/**上线效果1*/
+	@Excel(name = "上线效果1", width = 15)
+    @Schema(description = "上线效果1")
+    private String onlineEffect1;
+	/**上线效果1描述*/
+	@Excel(name = "上线效果1描述", width = 15)
+    @Schema(description = "上线效果1描述")
+    private String onlineEffect1Desc;
+	/**上线效果2*/
+	@Excel(name = "上线效果2", width = 15)
+    @Schema(description = "上线效果2")
+    private String onlineEffect2;
+	/**上校效果2描述*/
+	@Excel(name = "上校效果2描述", width = 15)
+    @Schema(description = "上校效果2描述")
+    private String onlineEffect2Desc;
+	/**上线效果3*/
+	@Excel(name = "上线效果3", width = 15)
+    @Schema(description = "上线效果3")
+    private String onlineEffect3;
+	/**上线效果3描述*/
+	@Excel(name = "上线效果3描述", width = 15)
+    @Schema(description = "上线效果3描述")
+    private String onlineEffect3Desc;
+	/**上线效果4*/
+	@Excel(name = "上线效果4", width = 15)
+    @Schema(description = "上线效果4")
+    private String onlineEffect4;
+	/**上线效果4描述*/
+	@Excel(name = "上线效果4描述", width = 15)
+    @Schema(description = "上线效果4描述")
+    private String onlineEffect4Desc;
 }

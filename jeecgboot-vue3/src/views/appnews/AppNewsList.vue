@@ -59,6 +59,7 @@
    import {useModal} from '/@/components/Modal';
   import JSelectUser from '/@/components/Form/src/jeecg/components/JSelectUser.vue';
   import { getDateByPicker } from '/@/utils';
+  import { cloneDeep } from "lodash-es";
 
   const fieldPickers = reactive({
   });
@@ -82,18 +83,14 @@
         fixed: 'right',
       },
       beforeFetch: async (params) => {
-        for (let key in fieldPickers) {
-          if (queryParam[key] && fieldPickers[key]) {
-            queryParam[key] = getDateByPicker(queryParam[key], fieldPickers[key]);
-          }
-        }
-        return Object.assign(params, queryParam);
+        let rangerQuery = await setRangeQuery();
+        return Object.assign(params, rangerQuery);
       },
     },
     exportConfig: {
       name: "新闻资讯",
       url: getExportUrl,
-      params: queryParam,
+      params: setRangeQuery,
     },
 	  importConfig: {
 	    url: getImportUrl,
@@ -234,6 +231,30 @@
 
 
 
+  
+  let rangeField = ''
+  
+  /**
+   * 设置范围查询条件
+   */
+  async function setRangeQuery(){
+    let queryParamClone = cloneDeep(queryParam);
+    if (rangeField) {
+      let fieldsValue = rangeField.split(',');
+      fieldsValue.forEach(item => {
+        if (queryParamClone[item]) {
+          let range = queryParamClone[item];
+          queryParamClone[item+'_begin'] = range[0];
+          queryParamClone[item+'_end'] = range[1];
+          delete queryParamClone[item];
+        } else {
+          queryParamClone[item+'_begin'] = '';
+          queryParamClone[item+'_end'] = '';
+        }
+      })
+    }
+    return queryParamClone;
+  }
 
 </script>
 

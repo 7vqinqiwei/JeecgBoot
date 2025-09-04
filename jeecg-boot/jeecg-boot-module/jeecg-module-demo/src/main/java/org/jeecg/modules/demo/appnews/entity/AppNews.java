@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 /**
  * @Description: 新闻资讯
  * @Author: jeecg-boot
- * @Date:   2025-09-02
+ * @Date:   2025-09-03
  * @Version: V1.0
  */
 @Data
@@ -64,9 +64,9 @@ public class AppNews implements Serializable {
 	@Excel(name = "简介", width = 15)
     @Schema(description = "简介")
     private String introduce;
-	/**图片数组[,]*/
-	@Excel(name = "图片数组[,]", width = 15)
-    @Schema(description = "图片数组[,]")
+	/**图片*/
+	@Excel(name = "图片", width = 15)
+    @Schema(description = "图片")
     private String pic;
 	/**发布时间*/
 	@Excel(name = "发布时间", width = 20, format = "yyyy-MM-dd HH:mm:ss")
